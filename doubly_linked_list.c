@@ -64,9 +64,8 @@ int16_t insert_after( tcb * position_tcb, tcb * new_tcb )
 	return result;
 }
 
-int16_t insert_in_order( linked_list * list, tcb * new_tcb )
+int16_t insert_by_priority( linked_list * list, tcb * new_tcb )
 {
-//	printf("working on tcb %d\n", new_tcb->priority);
 	int16_t result = -1;
 	tcb * iterator;
 	
@@ -74,7 +73,6 @@ int16_t insert_in_order( linked_list * list, tcb * new_tcb )
 	{
 		if( list->head == NULL )
 		{
-//			printf("inserting tcb %d at head\n", new_tcb->priority);
 			insert_at_head( list, new_tcb );
 		}
 		else
@@ -87,18 +85,56 @@ int16_t insert_in_order( linked_list * list, tcb * new_tcb )
 			
 			if(iterator == NULL)
 			{
-//				printf("inserting tcb %d at tail\n", new_tcb->priority);
 				insert_at_tail( list, new_tcb );
 			}
 			else if(iterator == list->head && new_tcb->priority < list->head->priority)
 			{
-//				printf("inserting tcb %d at head\n", new_tcb->priority);
 				insert_at_head( list, new_tcb);
 			}
 			else
 			{
 				tcb * temp_tcb_just_for_printing = iterator->prevtcb;
-//				printf("inserting tcb %d after tcb %d\n", new_tcb->priority, temp_tcb_just_for_printing->priority);
+				insert_after( iterator->prevtcb, new_tcb );
+			}
+
+		}
+
+		result = 0;
+	}
+
+	return result;
+}
+
+int16_t insert_by_back_online_time( linked_list * list, tcb * new_tcb )
+{
+	int16_t result = -1;
+	tcb * iterator;
+	
+	if( new_tcb != NULL )
+	{
+		if( list->head == NULL )
+		{
+			insert_at_head( list, new_tcb );
+		}
+		else
+		{
+			iterator = list->head;
+			while( iterator != NULL && iterator->back_online_time <= new_tcb->back_online_time )
+			{
+				iterator = iterator->nexttcb;
+			}
+			
+			if(iterator == NULL)
+			{
+				insert_at_tail( list, new_tcb );
+			}
+			else if(iterator == list->head && new_tcb->back_online_time < list->head->back_online_time)
+			{
+				insert_at_head( list, new_tcb);
+			}
+			else
+			{
+				tcb * temp_tcb_just_for_printing = iterator->prevtcb;
 				insert_after( iterator->prevtcb, new_tcb );
 			}
 

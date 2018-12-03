@@ -23,6 +23,7 @@ typedef struct tcb_record_t {
 	uint8_t priority;
 	uint8_t effective_priority;
 	uint8_t status;
+	uint64_t back_online_time;
 	struct tcb_record_t * prevtcb;
 } tcb;
 

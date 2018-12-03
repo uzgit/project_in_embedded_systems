@@ -12,9 +12,10 @@ typedef struct
 	tcb * tail;
 } linked_list;
 
-int16_t insert_at_head	( linked_list *, tcb *);
-int16_t insert_in_order	( linked_list *, tcb *);
-int16_t insert_after	( tcb *, tcb *);
-int16_t remove_tcb	( tcb *);
+int16_t insert_at_head( linked_list *, tcb *);
+int16_t insert_by_priority( linked_list *, tcb *);
+int16_t insert_by_back_online_time(linked_list *, tcb*);
+int16_t insert_after( tcb *, tcb *);
+int16_t remove_tcb( tcb *);
 
 void print_list(linked_list *);
