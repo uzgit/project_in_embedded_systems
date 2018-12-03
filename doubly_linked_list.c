@@ -1,6 +1,6 @@
 #include "doubly_linked_list.h"
 
-int16_t insert_at_head( linked_list * list, node * new_head )
+int16_t insert_at_head( linked_list * list, tcb * new_head )
 {
 	int16_t result = -1;
 	
@@ -13,8 +13,8 @@ int16_t insert_at_head( linked_list * list, node * new_head )
 		}
 		else
 		{
-			list->head->previous = new_head;
-			new_head->next = list->head;
+			list->head->prevtcb = new_head;
+			new_head->nexttcb = list->head;
 			list->head = new_head;
 		}
 		result = 0;
@@ -23,7 +23,7 @@ int16_t insert_at_head( linked_list * list, node * new_head )
 	return result;
 }
 
-int16_t insert_at_tail( linked_list * list, node * new_tail )
+int16_t insert_at_tail( linked_list * list, tcb * new_tail )
 {
 	int16_t result = -1;
 
@@ -46,17 +46,17 @@ int16_t insert_at_tail( linked_list * list, node * new_tail )
 	return result;
 }
 
-int16_t insert_after( node * position_node, node * new_node )
+int16_t insert_after( tcb * position_tcb, tcb * new_tcb )
 {
 	int16_t result = -1;
 
-	printf("position node: %d\n", position_node);
+	printf("position tcb: %d\n", position_tcb);
 
-	if(position_node != NULL && new_node != NULL)
+	if(position_tcb != NULL && new_tcb != NULL)
 	{
-		new_node->next = position_node->next;
-		new_node->previous = position_node;
-		position_node->next = new_node;
+		new_tcb->nexttcb = position_tcb->nexttcb;
+		new_tcb->prevtcb = position_tcb;
+		position_tcb->nexttcb = new_tcb;
 
 		result = 0;
 	}
@@ -64,42 +64,42 @@ int16_t insert_after( node * position_node, node * new_node )
 	return result;
 }
 
-int16_t insert_in_order( linked_list * list, node * new_node )
+int16_t insert_in_order( linked_list * list, tcb * new_tcb )
 {
-	printf("working on node %d\n", new_node->task.priority);
+	printf("working on tcb %d\n", new_tcb->priority);
 	int16_t result = -1;
-	node * iterator;
+	tcb * iterator;
 	
-	if( new_node != NULL )
+	if( new_tcb != NULL )
 	{
 		if( list->head == NULL )
 		{
-			printf("inserting node %d at head\n", new_node->task.priority);
-			insert_at_head( list, new_node );
+			printf("inserting tcb %d at head\n", new_tcb->priority);
+			insert_at_head( list, new_tcb );
 		}
 		else
 		{
 			iterator = list->head;
-			while( iterator != NULL && iterator->task.priority <= new_node->task.priority )
+			while( iterator != NULL && iterator->priority <= new_tcb->priority )
 			{
-				iterator = iterator->next;
+				iterator = iterator->nexttcb;
 			}
 			
 			if(iterator == NULL)
 			{
-				printf("inserting node %d at tail\n", new_node->task.priority);
-				insert_at_tail( list, new_node );
+				printf("inserting tcb %d at tail\n", new_tcb->priority);
+				insert_at_tail( list, new_tcb );
 			}
-			else if(iterator == list->head && new_node->task.priority < list->head->task.priority)
+			else if(iterator == list->head && new_tcb->priority < list->head->priority)
 			{
-				printf("inserting node %d at head\n", new_node->task.priority);
-				insert_at_head( list, new_node);
+				printf("inserting tcb %d at head\n", new_tcb->priority);
+				insert_at_head( list, new_tcb);
 			}
 			else
 			{
-				node * temp_node_just_for_printing = iterator->previous;
-				printf("inserting node %d after node %d\n", new_node->task.priority, temp_node_just_for_printing->task.priority);
-				insert_after( iterator->previous, new_node );
+				tcb * temp_tcb_just_for_printing = iterator->prevtcb;
+				printf("inserting tcb %d after tcb %d\n", new_tcb->priority, temp_tcb_just_for_printing->priority);
+				insert_after( iterator->prevtcb, new_tcb );
 			}
 
 		}
@@ -110,22 +110,22 @@ int16_t insert_in_order( linked_list * list, node * new_node )
 	return result;
 }
 
-int16_t remove_node( node * removed_node )
+int16_t remove_tcb( tcb * removed_tcb )
 {
 	int16_t result = -1;
-	node * next_node;
-	node * previous_node;
+	tcb * nexttcb_tcb;
+	tcb * prevtcb_tcb;
 
-	if(removed_node != NULL)
+	if(removed_tcb != NULL)
 	{
-		next_node     = removed_node->next;
-		previous_node = removed_node->previous;
+		nexttcb_tcb = removed_tcb->nexttcb;
+		prevtcb_tcb = removed_tcb->prevtcb;
 		
-		previous_node->next = removed_node->next;
-		next_node->previous = removed_node->previous;
+		prevtcb_tcb->nexttcb = removed_tcb->nexttcb;
+		nexttcb_tcb->prevtcb = removed_tcb->prevtcb;
 
-		removed_node->next = NULL;
-		removed_node->previous = NULL;
+		removed_tcb->nexttcb = NULL;
+		removed_tcb->prevtcb = NULL;
 
 		result = 0;
 	}
@@ -135,13 +135,13 @@ int16_t remove_node( node * removed_node )
 
 void print_list( linked_list * list)
 {	
-	printf("nodes:");
+	printf("tcbs:");
 
-	node * iterator = list->head;
+	tcb * iterator = list->head;
 	while(iterator != NULL)
 	{
-		printf(" %d", iterator->task.priority, iterator->previous, iterator->next);
-		iterator = iterator->next;
+		printf(" %d", iterator->priority, iterator->prevtcb, iterator->nexttcb);
+		iterator = iterator->nexttcb;
 	}
 	printf("\n");
 }

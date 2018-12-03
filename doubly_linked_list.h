@@ -8,20 +8,13 @@
 
 typedef struct
 {
-	tcb task;
-	struct node * next;
-	struct node * previous;
-} node;
-
-typedef struct
-{
-	node * head;
-	node * tail;
+	tcb * head;
+	tcb * tail;
 } linked_list;
 
-int16_t insert_at_head	( linked_list *, node *);
-int16_t insert_in_order	( linked_list *, node *);
-int16_t insert_after	( node *, node *);
-int16_t remove_node	( node *);
+int16_t insert_at_head	( linked_list *, tcb *);
+int16_t insert_in_order	( linked_list *, tcb *);
+int16_t insert_after	( tcb *, tcb *);
+int16_t remove_tcb	( tcb *);
 
 void print_list(linked_list *);

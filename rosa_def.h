@@ -15,5 +15,7 @@ typedef struct tcb_record_t {
 	int retaddr;			//The return address
 	int savereg[15];		//The CPU registers
 
-	uint8_t priority;
+	uint8_t  priority;
+	uint64_t backOnlineTime;
+	int status;
 } tcb;
