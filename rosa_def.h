@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 #define NAMESIZE 4
 
 typedef struct tcb_record_t {
