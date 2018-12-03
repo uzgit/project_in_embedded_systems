@@ -1,5 +1,7 @@
 #include <stdint.h>
 
+#ifndef ROSA_H
+#define ROSA_H
 #define NAMESIZE 4
 
 typedef struct tcb_record_t {
@@ -19,5 +21,8 @@ typedef struct tcb_record_t {
 
 	uint8_t priority;
 	uint8_t effective_priority;
+	uint8_t status;
 	struct tcb_record_t * prevtcb;
 } tcb;
+
+#endif
