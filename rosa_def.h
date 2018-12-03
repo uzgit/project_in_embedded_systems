@@ -2,6 +2,7 @@
 
 #ifndef ROSA_H
 #define ROSA_H
+
 #define NAMESIZE 4
 
 typedef struct tcb_record_t {

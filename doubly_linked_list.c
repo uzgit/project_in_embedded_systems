@@ -50,7 +50,7 @@ int16_t insert_after( tcb * position_tcb, tcb * new_tcb )
 {
 	int16_t result = -1;
 
-	printf("position tcb: %d\n", position_tcb);
+//	printf("position tcb: %d\n", position_tcb);
 
 	if(position_tcb != NULL && new_tcb != NULL)
 	{
@@ -66,7 +66,7 @@ int16_t insert_after( tcb * position_tcb, tcb * new_tcb )
 
 int16_t insert_in_order( linked_list * list, tcb * new_tcb )
 {
-	printf("working on tcb %d\n", new_tcb->priority);
+//	printf("working on tcb %d\n", new_tcb->priority);
 	int16_t result = -1;
 	tcb * iterator;
 	
@@ -74,7 +74,7 @@ int16_t insert_in_order( linked_list * list, tcb * new_tcb )
 	{
 		if( list->head == NULL )
 		{
-			printf("inserting tcb %d at head\n", new_tcb->priority);
+//			printf("inserting tcb %d at head\n", new_tcb->priority);
 			insert_at_head( list, new_tcb );
 		}
 		else
@@ -87,18 +87,18 @@ int16_t insert_in_order( linked_list * list, tcb * new_tcb )
 			
 			if(iterator == NULL)
 			{
-				printf("inserting tcb %d at tail\n", new_tcb->priority);
+//				printf("inserting tcb %d at tail\n", new_tcb->priority);
 				insert_at_tail( list, new_tcb );
 			}
 			else if(iterator == list->head && new_tcb->priority < list->head->priority)
 			{
-				printf("inserting tcb %d at head\n", new_tcb->priority);
+//				printf("inserting tcb %d at head\n", new_tcb->priority);
 				insert_at_head( list, new_tcb);
 			}
 			else
 			{
 				tcb * temp_tcb_just_for_printing = iterator->prevtcb;
-				printf("inserting tcb %d after tcb %d\n", new_tcb->priority, temp_tcb_just_for_printing->priority);
+//				printf("inserting tcb %d after tcb %d\n", new_tcb->priority, temp_tcb_just_for_printing->priority);
 				insert_after( iterator->prevtcb, new_tcb );
 			}
 
