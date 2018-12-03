@@ -1,9 +1,7 @@
-#include <stdint.h>
-
 #define NAMESIZE 4
 
 typedef struct tcb_record_t {
-//	struct tcb_record_t * nexttcb;
+	struct tcb_record_t * nexttcb;
 	char id[NAMESIZE];		//The task id/name
 	void (*staddr) (void);	//Start address
 	int *dataarea;			//The stack data area
@@ -15,7 +13,9 @@ typedef struct tcb_record_t {
 	int retaddr;			//The return address
 	int savereg[15];		//The CPU registers
 
-	uint8_t  priority;
-	uint64_t backOnlineTime;
-	int status;
+//new attributes
+
+	uint8_t priority;
+	uint8_t effective_priority;
+	struct tcb_record_t * prevtcb;
 } tcb;
